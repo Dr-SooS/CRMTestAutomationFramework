@@ -1,4 +1,5 @@
 ﻿using OpenQA.Selenium;
+using OpenQA.Selenium.Interactions;
 using OpenQA.Selenium.Support.UI;
 using System;
 using System.Collections.Generic;
@@ -19,6 +20,13 @@ namespace CRMTestAutomationFramework.PageObjects
         public BasePage(IWebDriver driver)
         {
             this._driver = driver;
+        }
+
+        public void NavigateTo(string firstLevel, string secondLevel)
+        {
+            var actions = new Actions(_driver);
+            actions.MoveToElement(_driver.FindElement(By.XPath($"//a[contains(., '{firstLevel}')]"))).Perform();
+            _driver.FindElement(By.XPath($"//a[contains(., '{secondLevel}')]")).Click();
         }
     }
 }

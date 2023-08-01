@@ -13,13 +13,16 @@ using System.Threading.Tasks;
 namespace CRMTestAutomationFramework.Specs.StepDefinitions
 {
     [Binding]
-    public class LoginStepDefenitions : BaseStepDefenition
+    public class LoginStepDefenitions
     {
+        protected static IWebDriver WebDriver;
         private LoginPage _loginPage;
         private HomeDashboardPage _homeDashboardPage;
 
         public LoginStepDefenitions()
         {
+            WebDriver = new ChromeDriver();
+            WebDriver.Manage().Window.Maximize();
             _loginPage = new LoginPage(WebDriver);
         }
 
@@ -39,6 +42,7 @@ namespace CRMTestAutomationFramework.Specs.StepDefinitions
         public void ThenIShouldBeLoggedInSuccessfully() {
             _homeDashboardPage.Wait().Until(WebDriver => _homeDashboardPage.PageTitile.Displayed);
             _homeDashboardPage.PageTitile.Text.Should().Contain(PageTitles.HomeDashboard);
+            WebDriver.Quit();
         }
     }
 }
