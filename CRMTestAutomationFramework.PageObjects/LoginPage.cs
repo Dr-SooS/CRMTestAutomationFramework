@@ -1,4 +1,5 @@
-﻿using CRMTestAutomationFramework.PageObjects.TodayActivities.HomeDashboard;
+﻿using CRMTestAutomationFramework.Core.Extensions;
+using CRMTestAutomationFramework.PageObjects.TodayActivities.HomeDashboard;
 using OpenQA.Selenium;
 using System;
 using System.Collections.Generic;
@@ -25,8 +26,7 @@ namespace CRMTestAutomationFramework.PageObjects
         {
             LoginInput.SendKeys(login);
             PasswordInput.SendKeys(password);
-            LoginButton.Click();
-            return new HomeDashboardPage(_driver);
+            return LoginButton.ClickAndGo<HomeDashboardPage>(_driver);
         }
     }
 }

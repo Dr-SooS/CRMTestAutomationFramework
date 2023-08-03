@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CRMTestAutomationFramework.Core.Utils;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,9 +15,9 @@ namespace CRMTestAutomationFramework.Core.BusinessObjects
         public List<string> Categories { get; set; }
 
         public Contact(Table parameters) {
-            FirstName = parameters.Rows[0].FirstOrDefault(value => value.Key.Equals("First Name")).Value;
-            LastName = parameters.Rows[0].FirstOrDefault(value => value.Key.Equals("Last Name")).Value;
-            Categories = parameters.Rows[0].FirstOrDefault(value => value.Key.Equals("First Name")).Value.Split(",").ToList();
+            FirstName = parameters.Rows[0].FirstOrDefault(value => value.Key.Equals("First Name")).Value + RandomGenerator.GetRandomString();
+            LastName = parameters.Rows[0].FirstOrDefault(value => value.Key.Equals("Last Name")).Value + RandomGenerator.GetRandomString();
+            Categories = parameters.Rows[0].FirstOrDefault(value => value.Key.Equals("Categories")).Value.Split(",").ToList();
         }
     }
 }

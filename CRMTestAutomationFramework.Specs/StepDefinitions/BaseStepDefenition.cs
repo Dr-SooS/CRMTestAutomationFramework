@@ -22,7 +22,7 @@ namespace CRMTestAutomationFramework.Specs.StepDefinitions
         public static void BeforeTest()
         {
             WebDriver = new ChromeDriver();
-            WebDriver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(10);
+            WebDriver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(15);
             WebDriver.Manage().Window.Maximize();
             WebDriver.Navigate().GoToUrl("https://demo.1crmcloud.com/login.php");
             LoginPage = new LoginPage(WebDriver);

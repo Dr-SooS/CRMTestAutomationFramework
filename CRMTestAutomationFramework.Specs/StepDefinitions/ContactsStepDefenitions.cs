@@ -1,5 +1,7 @@
 ﻿using CRMTestAutomationFramework.Core.BusinessObjects;
+using CRMTestAutomationFramework.Core.Constants;
 using CRMTestAutomationFramework.PageObjects.SalesAndMarketing.Contacts;
+using OpenQA.Selenium;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,6 +15,7 @@ namespace CRMTestAutomationFramework.Specs.StepDefinitions
     {
         private Contact _contact;
         private ContactsPage _contactsPage;
+        private ContactDetailsPage _contactDetailsPage;
 
         [Given(@"Contact with following parameters")]
         public void GivenContactWithFollowingParameters(Table table)
@@ -20,29 +23,31 @@ namespace CRMTestAutomationFramework.Specs.StepDefinitions
             _contact = new Contact(table); 
         }
 
-        [When(@"I navigate to (.*) > (.*) page")]
-        public void WhenINavigateToSalesMarketingContactsPage(string firstLevel, string secondLevel)
+        [When(@"I navigate to Contacts page")]
+        public void WhenINavigateToSalesMarketingContactsPage()
         {
-            HomeDashboardPage.NavigateTo(firstLevel, secondLevel);
-            _contactsPage = new ContactsPage(WebDriver);
+            _contactsPage = HomeDashboardPage.NavigateTo<ContactsPage>(MenuItems.SalesAndMarketing, MenuItems.Contacts);
         }
 
         [When(@"Create contact with given parameters")]
         public void WhenCreateContactWithGivenParameters()
         {
-            throw new PendingStepException();
+            _contactDetailsPage = _contactsPage.CreateContact(_contact);
         }
 
-        [When(@"I open contact details")]
+        [Then(@"I am on contact details")]
         public void WhenIOpenContactDetails()
         {
-            throw new PendingStepException();
+            _contactDetailsPage.Wait().Until(WebDriver => _contactDetailsPage.EditButton.Displayed);
+            _contactDetailsPage.WaitForStatusMessageIsHidden();
+            _contactDetailsPage.PageTitile.Text.Should().Contain($"Contacts: {_contact.FirstName} {_contact.LastName}".ToUpper());
         }
 
         [Then(@"Contact details should be correct")]
         public void ThenContactDetailsShouldBeCorrect()
         {
-            throw new PendingStepException();
+            _contactDetailsPage.SummaryHeader.Text.Should().Contain($"{_contact.FirstName} {_contact.LastName}");
+            _contactDetailsPage.Category.Text.Should().Contain(String.Join(", ", _contact.Categories));
         }
 
     }
