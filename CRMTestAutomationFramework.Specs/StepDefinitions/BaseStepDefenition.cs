@@ -7,6 +7,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Configuration;
+using CRMTestAutomationFramework.Specs.Configuration;
 
 namespace CRMTestAutomationFramework.Specs.StepDefinitions
 {
@@ -21,12 +23,18 @@ namespace CRMTestAutomationFramework.Specs.StepDefinitions
         [BeforeTestRun]
         public static void BeforeTest()
         {
+            var config = new ConfigurationBuilder()
+                .SetBasePath(AppDomain.CurrentDomain.BaseDirectory)
+                .AddJsonFile("appsettings.json").Build();
+            var user = config.GetSection("User").Get<User>();
+            var siteSettings = config.GetSection("SiteSettings").Get<SiteSettings>();
+
             WebDriver = new ChromeDriver();
             WebDriver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(15);
             WebDriver.Manage().Window.Maximize();
-            WebDriver.Navigate().GoToUrl("https://demo.1crmcloud.com/login.php");
+            WebDriver.Navigate().GoToUrl(siteSettings.BaseUrl);
             LoginPage = new LoginPage(WebDriver);
-            HomeDashboardPage = LoginPage.Login("admin", "admin");
+            HomeDashboardPage = LoginPage.Login(user.Username, user.Password);
             HomeDashboardPage.Wait().Until(WebDriver => HomeDashboardPage.PageTitile.Displayed);
         }
 
