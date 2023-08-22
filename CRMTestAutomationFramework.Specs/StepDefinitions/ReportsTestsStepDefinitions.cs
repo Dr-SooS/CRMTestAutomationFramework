@@ -29,14 +29,14 @@ namespace CRMTestAutomationFramework.Specs.StepDefinitions
         [When(@"I run report")]
         public void WhenIRunReport()
         {
-            _reportPage.RunReportButton.Click();
+            _reportPage.RunReport();
             _reportPage.WaitForStatusMessageIsHidden();
         }
 
         [Then(@"There should be results")]
         public void ThenThereShouldBeResults()
         {
-            _reportPage.ReportResultsTable.Rows.Count.Should().BeGreaterThan(0);
+            _reportPage.ResultsCount.Should().BeGreaterThan(0);
         }
     }
 }

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace CRMTestAutomationFramework.PageObjects.TodayActivities.HomeDashboard
 {
-    public class HomeDashboardPage : BasePage
+    public class HomeDashboardPage : BaseAppPage
     {
         public HomeDashboardPage(IWebDriver driver) : base(driver)
         {

@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace CRMTestAutomationFramework.PageObjects.SalesAndMarketing.Contacts
 {
-    public class ContactsPage : BasePage
+    public class ContactsPage : BaseAppPage
     {
         public ContactsPage(IWebDriver driver) : base(driver)
         {
@@ -19,11 +19,8 @@ namespace CRMTestAutomationFramework.PageObjects.SalesAndMarketing.Contacts
         public ContactDetailsPage CreateContact(Contact contact)
         {
             var createContactPage = this.ClickOnShortcut<CreateContactPage>("Create Contact");
-            createContactPage.WaitForStatusMessageIsHidden();
-            createContactPage.FirstNameInput.SendKeys(contact.FirstName);
-            createContactPage.LastNameInput.SendKeys(contact.LastName);
-            createContactPage.SelectCategories(contact.Categories);
-            return createContactPage.SaveButton.ClickAndGo<ContactDetailsPage>(_driver);
+            createContactPage.FillDetails(contact);
+            return createContactPage.Save();
         }
     }
 }

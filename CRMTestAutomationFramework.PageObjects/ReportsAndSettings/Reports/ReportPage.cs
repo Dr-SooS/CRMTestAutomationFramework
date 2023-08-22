@@ -7,15 +7,22 @@ using System.Threading.Tasks;
 
 namespace CRMTestAutomationFramework.PageObjects.ReportsAndSettings.Reports
 {
-    public class ReportPage : BasePage
+    public class ReportPage : BaseAppPage
     {
         public ReportPage(IWebDriver driver) : base(driver)
         {
-            ReportResultsTable = new ReportResultsTable(driver);
+            _reportResultsTable = new ReportResultsTable(driver);
         }
 
-        public ReportResultsTable ReportResultsTable { get; set; }
+        private ReportResultsTable _reportResultsTable { get; set; }
 
-        public IWebElement RunReportButton => _driver.FindElement(By.Name("FilterForm_applyButton"));
+        private IWebElement _runReportButton => _driver.FindElement(By.Name("FilterForm_applyButton"));
+
+        public int ResultsCount => _reportResultsTable.RowsCount;
+
+        public void RunReport()
+        {
+            _runReportButton.Click();
+        }
     }
 }

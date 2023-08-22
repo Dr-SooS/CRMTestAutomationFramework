@@ -13,20 +13,20 @@ namespace CRMTestAutomationFramework.PageObjects
     {
         public LoginPage(IWebDriver driver) : base(driver) { }
 
-        private IWebElement LoginInput => _driver.FindElement(By.Id("login_user"));
-        private IWebElement PasswordInput => _driver.FindElement(By.Id("login_pass"));
-        private IWebElement LoginButton => _driver.FindElement(By.Id("login_button"));
+        private IWebElement _loginInput => _driver.FindElement(By.Id("login_user"));
+        private IWebElement _passwordInput => _driver.FindElement(By.Id("login_pass"));
+        private IWebElement _loginButton => _driver.FindElement(By.Id("login_button"));
 
-        public void Navigate()
+        public void Navigate(string url)
         {
-            _driver.Navigate().GoToUrl("https://demo.1crmcloud.com/login.php");
+            _driver.Navigate().GoToUrl(url);
         }
 
         public HomeDashboardPage Login(string login, string password)
         {
-            LoginInput.SendKeys(login);
-            PasswordInput.SendKeys(password);
-            return LoginButton.ClickAndGo<HomeDashboardPage>(_driver);
+            _loginInput.SendKeys(login);
+            _passwordInput.SendKeys(password);
+            return _loginButton.ClickAndGo<HomeDashboardPage>(_driver);
         }
     }
 }

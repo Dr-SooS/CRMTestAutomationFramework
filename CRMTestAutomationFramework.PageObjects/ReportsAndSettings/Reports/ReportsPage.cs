@@ -7,18 +7,18 @@ using System.Threading.Tasks;
 
 namespace CRMTestAutomationFramework.PageObjects.ReportsAndSettings.Reports
 {
-    public class ReportsPage : BasePage
+    public class ReportsPage : BaseAppPage
     {
         public ReportsPage(IWebDriver driver) : base(driver)
         {
-            Filter = new ReportsTableFilter(driver);
+            _filter = new ReportsTableFilter(driver);
         }
 
-        public ReportsTableFilter Filter { get; set; }
+        private ReportsTableFilter _filter { get; set; }
 
         public ReportPage OpenReport(string reportName)
         {
-            var reportPage = Filter.SearchBySearchField<ReportPage>(reportName);
+            var reportPage = _filter.SearchBySearchField<ReportPage>(reportName);
             reportPage.WaitForStatusMessageIsHidden();
             return reportPage;
         }

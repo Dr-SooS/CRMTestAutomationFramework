@@ -10,7 +10,7 @@ namespace CRMTestAutomationFramework.Core.Extensions
 {
     public static class ElementExtensions
     {
-        public static T ClickAndGo<T>(this IWebElement element, IWebDriver webDriver) where T : BasePage
+        public static T ClickAndGo<T>(this IWebElement element, IWebDriver webDriver) where T : BaseAppPage
         {
             element.Click();
             return Activator.CreateInstance(typeof(T), new object[] { webDriver }) as T;

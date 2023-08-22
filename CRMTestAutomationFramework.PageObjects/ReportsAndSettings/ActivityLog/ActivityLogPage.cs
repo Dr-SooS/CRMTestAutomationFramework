@@ -7,13 +7,14 @@ using System.Threading.Tasks;
 
 namespace CRMTestAutomationFramework.PageObjects.ReportsAndSettings.ActivityLog
 {
-    public class ActivityLogPage : BasePage
+    public class ActivityLogPage : BaseAppPage
     {
         public ActivityLogPage(IWebDriver driver) : base(driver)
         {
-            ActivityLogTable = new ActivityLogTable(driver);
+            _activityLogTable = new ActivityLogTable(driver);
         }
 
-        public ActivityLogTable ActivityLogTable;
+        private ActivityLogTable _activityLogTable;
+        public ActivityLogTable ActivityLogTable => _activityLogTable;
     }
 }

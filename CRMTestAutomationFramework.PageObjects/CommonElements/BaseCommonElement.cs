@@ -12,9 +12,6 @@ namespace CRMTestAutomationFramework.PageObjects.CommonElements
     {
         protected IWebDriver _driver;
 
-        public WebDriverWait Wait(int timeSpanInSeconds = 0) => timeSpanInSeconds != 0 ? new WebDriverWait(_driver, TimeSpan.FromSeconds(timeSpanInSeconds)) : new WebDriverWait(_driver, TimeSpan.FromSeconds(10));
-
-
         public BaseCommonElement(IWebDriver driver)
         {
             this._driver = driver;

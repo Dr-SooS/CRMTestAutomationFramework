@@ -38,16 +38,16 @@ namespace CRMTestAutomationFramework.Specs.StepDefinitions
         [Then(@"I am on contact details")]
         public void WhenIOpenContactDetails()
         {
-            _contactDetailsPage.Wait().Until(WebDriver => _contactDetailsPage.EditButton.Displayed);
+            _contactDetailsPage.WaitEditIsAvailable();
             _contactDetailsPage.WaitForStatusMessageIsHidden();
-            _contactDetailsPage.PageTitile.Text.Should().Contain($"Contacts: {_contact.FirstName} {_contact.LastName}".ToUpper());
+            _contactDetailsPage.PageTitleText.Should().Contain($"Contacts: {_contact.FirstName} {_contact.LastName}".ToUpper());
         }
 
         [Then(@"Contact details should be correct")]
         public void ThenContactDetailsShouldBeCorrect()
         {
-            _contactDetailsPage.SummaryHeader.Text.Should().Contain($"{_contact.FirstName} {_contact.LastName}");
-            _contactDetailsPage.Category.Text.Should().Contain(String.Join(", ", _contact.Categories));
+            _contactDetailsPage.SummaryHeaderText.Should().Contain($"{_contact.FirstName} {_contact.LastName}");
+            _contactDetailsPage.CategoryText.Should().Contain(String.Join(", ", _contact.Categories));
         }
 
     }

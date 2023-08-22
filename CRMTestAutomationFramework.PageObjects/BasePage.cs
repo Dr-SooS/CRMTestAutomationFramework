@@ -1,7 +1,5 @@
-﻿using CRMTestAutomationFramework.Core.Extensions;
+﻿using OpenQA.Selenium.Support.UI;
 using OpenQA.Selenium;
-using OpenQA.Selenium.Interactions;
-using OpenQA.Selenium.Support.UI;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,42 +8,15 @@ using System.Threading.Tasks;
 
 namespace CRMTestAutomationFramework.PageObjects
 {
-    public class BasePage
+    public abstract class BasePage
     {
         protected IWebDriver _driver;
 
         public WebDriverWait Wait(int timeSpanInSeconds = 0) => timeSpanInSeconds != 0 ? new WebDriverWait(_driver, TimeSpan.FromSeconds(timeSpanInSeconds)) : new WebDriverWait(_driver, TimeSpan.FromSeconds(10));
 
-        public IWebElement PageTitile => _driver.FindElement(By.Id("main-title"));
-        public IWebElement StatusMessage => _driver.FindElement(By.Id("ajaxStatusDiv"));
-        public IWebElement ActionsButton => _driver.FindElement(By.XPath("//button[contains(@id, 'ActionButtonHead')]"));
-
         public BasePage(IWebDriver driver)
         {
             this._driver = driver;
-        }
-
-        public T NavigateTo<T>(string firstLevel, string secondLevel) where T : BasePage
-        {
-            var actions = new Actions(_driver);
-            actions.MoveToElement(_driver.FindElement(By.XPath($"//a[contains(., '{firstLevel}')]"))).Perform();
-            return _driver.FindElement(By.XPath($"//a[contains(., '{secondLevel}')]")).ClickAndGo<T>(_driver);
-        }
-
-        public T ClickOnShortcut<T>(string shortcut) where T : BasePage
-        {
-            return _driver.FindElement(By.XPath($"//a[@class='sidebar-item-link-basic' and contains(., '{shortcut}')]")).ClickAndGo<T>(_driver);
-        }
-
-        public void WaitForStatusMessageIsHidden()
-        {
-            Wait().Until(_driver => !StatusMessage.Displayed);
-        }
-
-        public void ClickAction(string action)
-        {
-            ActionsButton.Click();
-            _driver.FindElement(By.XPath($"//div[contains(@class, 'menu-option single') and contains(., '{action}')]")).Click();
         }
     }
 }
